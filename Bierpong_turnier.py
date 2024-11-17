@@ -56,7 +56,8 @@ if Path(RESULTS_URL).exists():
     st.session_state.tables = load_results()
 
 # Titel der App
-st.set_page_config(page_title="Bierpong Turnier", layout="centered")
+# st.set_page_config(page_title="Bierpong Turnier", layout="centered")
+
 st.title("🍻 Bierpong Turnier")
 
 # **Abschnitt: Spielplan**
