@@ -16,7 +16,7 @@ def save_results(results, file_path):
         json.dump(results, file, indent=4)
 
 # Datei für gespeicherte Daten
-results_file = "results.json"
+results_file = "https://github.com/Me37127/bierpong/blob/main/results.json"
 
 # Teams und Gruppen definieren - landet am Ende in der Tabelle
 teams_group_a = ["Team 1", "Team 2", "Team 3", "Team 4"]
