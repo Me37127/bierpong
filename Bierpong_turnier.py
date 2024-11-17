@@ -31,7 +31,7 @@ creds = ServiceAccountCredentials.from_json_keyfile_dict(service_account_info, s
 client = gspread.authorize(creds)
 
 # Lade das Google Sheet
-sheet = client.open("results_bierpong").sheet1  
+sheet = client.open("results_bierpong").results
 
 def load_results():
     try:
