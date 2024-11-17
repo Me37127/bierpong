@@ -5,7 +5,7 @@ import requests
 from pathlib import Path
 from oauth2client.service_account import ServiceAccountCredentials
 
-'''
+
 # Definiere den Umfang der Berechtigungen für den Service Account
 scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
 
@@ -22,7 +22,7 @@ client = gspread.authorize(creds)
 
 # Lade das Google Sheet
 sheet = client.open("results_bierpong").sheet1  # Name deines Sheets
-'''
+
 
 def load_results():
     try:
