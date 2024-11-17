@@ -118,7 +118,19 @@ if submit_result:
             group_table[team1]["Becherdifferenz"] += score_team1
 
         # Ergebnisse speichern
-        save_results(st.session_state.tables)
+        # Neuen Eintrag erstellen
+        new_row = {
+            "Group": selected_group,
+            "Team 1": team1,
+            "Score 1": score_team1,
+            "Team 2": team2,
+            "Score 2": score_team2,
+        }
+    
+        # Daten zu Google Sheets schreiben
+        updated_data = data.append(new_row, ignore_index=True)
+        conn.write(updated_data, spreadsheet=url)
+        # save_results(st.session_state.tables)
 
         st.success(f"Ergebnis für {team1} vs. {team2} gespeichert!")
     else:
