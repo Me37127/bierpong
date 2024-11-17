@@ -3,19 +3,24 @@ import pandas as pd
 import streamlit as st
 import requests
 from pathlib import Path
+import gspread
 from oauth2client.service_account import ServiceAccountCredentials
-
 
 # Definiere den Umfang der Berechtigungen für den Service Account
 scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
 
-# Lade die Service Account JSON-Datei
-url = 'https://github.com/Me37127/bierpong/blob/main/anmeldedaten.json'
+# URL zur JSON-Datei des Service Accounts auf GitHub
+url = 'https://raw.githubusercontent.com/Me37127/bierpong/main/anmeldedaten.json'
 
-# Hole die Datei
+# Lade die JSON-Datei von GitHub herunter
 response = requests.get(url)
 
-creds = ServiceAccountCredentials.from_json_keyfile_name(response, scope)
+# Speichere die Datei lokal, um sie später zu verwenden
+with open('anmeldedaten.json', 'wb') as f:
+    f.write(response.content)
+
+# Lade die Service Account JSON-Datei lokal
+creds = ServiceAccountCredentials.from_json_keyfile_name('anmeldedaten.json', scope)
 
 # Authentifiziere und erhalte Zugriff auf Google Sheets
 client = gspread.authorize(creds)
@@ -37,9 +42,8 @@ def save_results(results):
     # Optional: Pushen der Datei zu GitHub
 
 # Datei für gespeicherte Daten
-
-RESULTS_URL = "https://github.com/Me37127/bierpong/blob/main/results.json"
-results_file = "https://github.com/Me37127/bierpong/blob/main/results.json"
+RESULTS_URL = "https://raw.githubusercontent.com/Me37127/bierpong/main/results.json"
+results_file = "results.json"  # Lokale Datei für die gespeicherten Ergebnisse
 
 # Teams und Gruppen definieren - landet am Ende in der Tabelle
 teams_group_a = ["Team 1", "Team 2", "Team 3", "Team 4"]
@@ -67,7 +71,7 @@ if "tables" not in st.session_state:
 
 # Lade gespeicherte Ergebnisse aus der JSON-Datei, falls vorhanden
 if Path(results_file).exists():
-    st.session_state.tables = load_results(results_file)
+    st.session_state.tables = load_results()
 
 # Titel der App
 st.set_page_config(page_title="Bierpong Turnier", layout="centered")
@@ -138,11 +142,9 @@ if submit_result:
         st.error("Es darf kein Unentschieden geben!")
 
 # **Abschnitt: Gruppentabellen**
-
 st.header("📊 Gruppentabellen")
 for group, table in st.session_state.tables.items():
     st.subheader(group)
-    sorted_table = pd.DataFrame(table).T#.sort_values(by=["Siege", "Becherdifferenz"], ascending=False)
+    sorted_table = pd.DataFrame(table).T
     st.table(sorted_table)
-
 
