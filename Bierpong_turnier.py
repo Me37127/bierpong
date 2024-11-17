@@ -2,26 +2,19 @@ import json
 import pandas as pd
 import streamlit as st
 from pathlib import Path
+from oauth2client.service_account import ServiceAccountCredentials
 
-import base64
+# Definiere den Umfang der Berechtigungen für den Service Account
+scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
 
-# GitHub API URL und Token
-GITHUB_REPO = "https://github.com/Me37127/bierpong/blob/main/results.json"
-GITHUB_TOKEN = "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"  # Dein GitHub Token
+# Lade die Service Account JSON-Datei
+creds = ServiceAccountCredentials.from_json_keyfile_name('https://github.com/Me37127/bierpong/blob/main/anmeldedaten.json', scope)
 
-def load_results():
-    headers = {'Authorization': f'token {GITHUB_TOKEN}'}
-    response = requests.get(GITHUB_REPO, headers=headers)
-    
-    if response.status_code == 200:
-        file_data = response.json()
-        file_content = file_data['content']
-        decoded_content = base64.b64decode(file_content).decode('utf-8')
-        print(f"Ergebnisse geladen: {decoded_content}")  # Zum Debuggen
-        return json.loads(decoded_content)
-    else:
-        print(f"Fehler beim Laden der Datei: {response.status_code} - {response.text}")
-        return {}  # Rückgabe einer leeren Datei, wenn die Datei nicht existiert oder ein Fehler auftritt
+# Authentifiziere und erhalte Zugriff auf Google Sheets
+client = gspread.authorize(creds)
+
+# Lade das Google Sheet
+sheet = client.open("results_bierpong").sheet1  # Name deines Sheets
 
 '''
 def load_results():
