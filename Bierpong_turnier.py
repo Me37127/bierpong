@@ -4,7 +4,17 @@ import streamlit as st
 import requests
 from pathlib import Path
 
+url = "https://docs.google.com/spreadsheets/d/1x5kPSyIvVgvt5sTenNRHwAc3ix7i5ZGyswZ2xhsMOQs/edit?usp=sharing"
 
+conn = st.connection("gsheets", type=GSheetsConnection)
+
+data = conn.read(spreadsheet=url, usecols=[0, 1])
+st.dataframe(data)
+
+
+# Print results.
+for row in df.itertuples():
+    st.write(f"{row.name} has a :{row.pet}:")
 def load_results():
     try:
         response = requests.get(RESULTS_URL)
