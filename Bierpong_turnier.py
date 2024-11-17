@@ -19,7 +19,7 @@ def save_results(results):
 
 # Datei für gespeicherte Daten
 RESULTS_URL = "https://raw.githubusercontent.com/Me37127/bierpong/main/results.json"
-RESULTS_URL = "results.json"  # Lokale Datei für die gespeicherten Ergebnisse
+# RESULTS_URL = "results.json"
 
 # Teams und Gruppen definieren - landet am Ende in der Tabelle
 teams_group_a = ["Team 1", "Team 2", "Team 3", "Team 4"]
@@ -46,7 +46,7 @@ if "tables" not in st.session_state:
     }
 
 # Lade gespeicherte Ergebnisse aus der JSON-Datei, falls vorhanden
-if Path(results_file).exists():
+if Path(RESULTS_URL).exists():
     st.session_state.tables = load_results()
 
 # Titel der App
