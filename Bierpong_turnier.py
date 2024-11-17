@@ -3,7 +3,7 @@ import pandas as pd
 import streamlit as st
 import requests
 from pathlib import Path
-
+from streamlit_gsheets import GSheetsConnection
 url = "https://docs.google.com/spreadsheets/d/1x5kPSyIvVgvt5sTenNRHwAc3ix7i5ZGyswZ2xhsMOQs/edit?usp=sharing"
 
 conn = st.connection("gsheets", type=GSheetsConnection)
