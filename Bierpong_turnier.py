@@ -3,13 +3,34 @@ import pandas as pd
 import streamlit as st
 from pathlib import Path
 
+import base64
+
+# GitHub API URL und Token
+GITHUB_REPO = "https://github.com/Me37127/bierpong/blob/main/results.json"
+GITHUB_TOKEN = "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"  # Dein GitHub Token
+
+def load_results():
+    headers = {'Authorization': f'token {GITHUB_TOKEN}'}
+    response = requests.get(GITHUB_REPO, headers=headers)
+    
+    if response.status_code == 200:
+        file_data = response.json()
+        file_content = file_data['content']
+        decoded_content = base64.b64decode(file_content).decode('utf-8')
+        print(f"Ergebnisse geladen: {decoded_content}")  # Zum Debuggen
+        return json.loads(decoded_content)
+    else:
+        print(f"Fehler beim Laden der Datei: {response.status_code} - {response.text}")
+        return {}  # Rückgabe einer leeren Datei, wenn die Datei nicht existiert oder ein Fehler auftritt
+
+'''
 def load_results():
     try:
         response = requests.get(RESULTS_URL)
         return response.json()  # Lade die JSON-Datei von GitHub
     except:
         return {}  # Rückfall, wenn keine Datei vorhanden ist
-
+'''
 def save_results(results):
     with open('results.json', 'w') as file:
         json.dump(results, file)  # Speichere sie lokal auf Streamlit
