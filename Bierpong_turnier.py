@@ -3,35 +3,7 @@ import pandas as pd
 import streamlit as st
 import requests
 from pathlib import Path
-import gspread
-from oauth2client.service_account import ServiceAccountCredentials
 
-# Dein Service Account JSON-Daten als Python Dictionary (aus deiner Datei)
-service_account_info = {
-  "type": "service_account",
-  "project_id": "bierpongturnier",
-  "private_key_id": "ea13df843d5889c3544d37088a9691be3579a810",
-  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQDXpRgIGMMpZOh1\nhMhheTXYPwd1Qm9UAGrs/BDuGVd8s67IZlr3rq1Vi/fClBMfbS9YZiA0pca9L/K4\njn/HdEUnogymTccWJl0WCUl0EjOXyan7+q545WCNjCMYVt4nECGPeQX40HV3p3Pu\nO9kkPfvT65h/m6g3Bu3t9Qse79wh6AIOyuq0q/VSO9bHp6zRsOM1Zq0DRKFEXln0\n2WZ+oIdZtob2wHw5GV+YvCJdcTdvtxteSWbruEtyu284f21syiqmnYL6bC+Vj+jd\nL1MpsxgEh/M67hTMPuMZ1NGLpxsL1QwdbDtX82cargwsE0TeA5T1aKdrC/ZkDTPU\n9WL8DjTtAgMBAAECggEAFpxrN2gfSI8Z176vQxcyR+Ud+1PWuAReMdChVtHl7D+r\n7zvaRHe2mY52UVr04Vnxua9lp5eNTeeB6AubBtcgbC4v7N0hZ6dooceiAc9pxPvi\nfLcVhbwpYlYkFOiA3TAyEKjkMSlsc7olbACu/T+ZkOg2YoT3/6MUnhuQSbNlTdGk\nY9q140OYIf7z3fAk201qm/fR/g5N0iV8/YgARIV3n/gBfb/Yeh5RvKFrKXEbSae0\nn9tMeAEzz15Xaj1KE7YTZbQg5CgCgEz/2tGeTGjmHFnAE0uKwbZhzbdwWEVRaF9z\naaOjXFexJyG3KRzKMaYP1YaEIMDtXqLghp6S1nez8QKBgQDvFTUOw82JgQWsyP55\nWk3IT4ZKqjApXl4PPpgRTTmPG3bjfDAtD9HSh3GY8xKq6uCzIZ5Wm1RCrShdlFl/\ngZ6Qjqyqs3NyfhpTctUprEA6DdnzYfN11ooO82G5vvBO+m0Hu3w6f+t35Ot1faw2\npRB7JZDv4yai/lsXsuvgRwe1vQKBgQDm51PC9oqagwDD/PcpoiA6aOkhijwe2DvM\nyvM6Xok1wHlrxknagHO692APBdRYw2ypIY87cV0L9rKQ3q0E5R7DjlxkvfbqqQnb\npV0N393JAhzOBytnML+tp2LIYo/luDT6VHfjHaziyHY8KRdPstgqtm6D6itzqCXL\ny34SDxN28QKBgAiusHqUycYQlXAs7HDjwqdfm/TiMVWPQ8Mx9rvKHikASlUAkY9R\nX8FRgeKYETl7xiU7N1DV2z2ApFKhrI5g2q1NQSAB3FNwGOym4u7cfoidMCkSiZDh\n9amNVSM1t+xmU8dQG7bUJmz4N0TRB4wEepC+UIElsqWArzYxHTfL3I/RAoGAaYWB\n8/EzelUv/mEWmwIqdEcJc3h27SmoenitGxmk3tmtI6GkkqRtPx5Z2cOyPTZh7BEY\nIfQ2r4b4J9h7fWcv3fKrKqbdtnO1u5kgo3yRIJFElKsWHLxcfIGoVScl17eNDnGX\nsEUZgzJVRj0JGDUFMM/aRZK4dMx9KVs/rAUTwiECgYB1Ni94BJeb+VGZ9Z3Jy88v\nY5v5ezJGGcUScJ+B4/Z3ksgxR5NRalB1Io/as7N571eD2ED3N9Im8OPt6oT+L0Gu\nVhUeQZkvUcMViX++unWsYbQHiAsYRJ1TKMKrHjXv4LPBJbz8qe0XduSXKQ3tvAIK\nMkYrM8YkQ50EeLwNhkeOQQ==\n-----END PRIVATE KEY-----\n",
-  "client_email": "bp-768@bierpongturnier.iam.gserviceaccount.com",
-  "client_id": "113399811597840719972",
-  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-  "token_uri": "https://oauth2.googleapis.com/token",
-  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/bp-768%40bierpongturnier.iam.gserviceaccount.com",
-  "universe_domain": "googleapis.com"
-}
-
-# Definiere den Umfang der Berechtigungen für den Service Account
-scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-
-# Lese die Anmeldedaten aus dem Dictionary
-creds = ServiceAccountCredentials.from_json_keyfile_dict(service_account_info, scope)
-
-# Authentifiziere und erhalte Zugriff auf Google Sheets
-client = gspread.authorize(creds)
-
-# Lade das Google Sheet
-sheet = client.open("results_bierpong").results
 
 def load_results():
     try:
@@ -47,7 +19,7 @@ def save_results(results):
 
 # Datei für gespeicherte Daten
 RESULTS_URL = "https://raw.githubusercontent.com/Me37127/bierpong/main/results.json"
-results_file = "results.json"  # Lokale Datei für die gespeicherten Ergebnisse
+RESULTS_URL = "results.json"  # Lokale Datei für die gespeicherten Ergebnisse
 
 # Teams und Gruppen definieren - landet am Ende in der Tabelle
 teams_group_a = ["Team 1", "Team 2", "Team 3", "Team 4"]
