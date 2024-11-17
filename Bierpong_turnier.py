@@ -10,7 +10,7 @@ url = "https://docs.google.com/spreadsheets/d/1x5kPSyIvVgvt5sTenNRHwAc3ix7i5ZGys
 conn = st.connection("gsheets", type=GSheetsConnection)
 
 data = conn.read(spreadsheet=url, usecols=[0, 1])
-#st.dataframe(data)
+st.dataframe(data)
 
 def load_results():
     try:
