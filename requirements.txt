@@ -1,3 +1,2 @@
 gspread
-google-auth
-oauth2client
+streamlit_gsheets
