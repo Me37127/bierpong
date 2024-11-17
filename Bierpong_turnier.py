@@ -3,20 +3,20 @@ import pandas as pd
 import streamlit as st
 from pathlib import Path
 
-# Funktion, um Ergebnisse zu laden
-def load_results(file_path):
-    if Path(file_path).exists():
-        with open(file_path, "r") as file:
-            return json.load(file)
-    return {}
+def load_results():
+    try:
+        response = requests.get(RESULTS_URL)
+        return response.json()  # Lade die JSON-Datei von GitHub
+    except:
+        return {}  # Rückfall, wenn keine Datei vorhanden ist
 
-# Funktion, um Ergebnisse zu speichern
-def save_results(results, file_path):
-    with open(file_path, "w") as file:
-        json.dump(results, file, indent=4)
+def save_results(results):
+    with open('results.json', 'w') as file:
+        json.dump(results, file)  # Speichere sie lokal auf Streamlit
+    # Optional: Pushen der Datei zu GitHub
 
 # Datei für gespeicherte Daten
-results_file = "https://github.com/Me37127/bierpong/blob/main/results.json"
+RESULTS_URL = "https://github.com/Me37127/bierpong/blob/main/results.json"
 
 # Teams und Gruppen definieren - landet am Ende in der Tabelle
 teams_group_a = ["Team 1", "Team 2", "Team 3", "Team 4"]
