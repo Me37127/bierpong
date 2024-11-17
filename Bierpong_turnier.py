@@ -5,11 +5,12 @@ import requests
 from pathlib import Path
 from oauth2client.service_account import ServiceAccountCredentials
 
+'''
 # Definiere den Umfang der Berechtigungen für den Service Account
 scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
 
 # Lade die Service Account JSON-Datei
-url = 'https://github.com/Me37127/bierpong/blob/main/anmeldedaten.jsonn'
+url = 'https://github.com/Me37127/bierpong/blob/main/anmeldedaten.json'
 
 # Hole die Datei
 response = requests.get(url)
@@ -21,21 +22,23 @@ client = gspread.authorize(creds)
 
 # Lade das Google Sheet
 sheet = client.open("results_bierpong").sheet1  # Name deines Sheets
-
 '''
+
 def load_results():
     try:
         response = requests.get(RESULTS_URL)
         return response.json()  # Lade die JSON-Datei von GitHub
     except:
         return {}  # Rückfall, wenn keine Datei vorhanden ist
-'''
+
 def save_results(results):
     with open('results.json', 'w') as file:
         json.dump(results, file)  # Speichere sie lokal auf Streamlit
     # Optional: Pushen der Datei zu GitHub
 
 # Datei für gespeicherte Daten
+
+RESULTS_URL = "https://github.com/Me37127/bierpong/blob/main/results.json"
 results_file = "https://github.com/Me37127/bierpong/blob/main/results.json"
 
 # Teams und Gruppen definieren - landet am Ende in der Tabelle
