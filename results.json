@@ -1,0 +1,46 @@
+{
+    "Group A": {
+        "Team 1": {
+            "Siege": 0,
+            "Niederlagen": 0,
+            "Becherdifferenz": 0
+        },
+        "Team 2": {
+            "Siege": 0,
+            "Niederlagen": 0,
+            "Becherdifferenz": 0
+        },
+        "Team 3": {
+            "Siege": 0,
+            "Niederlagen": 0,
+            "Becherdifferenz": 0
+        },
+        "Team 4": {
+            "Siege": 0,
+            "Niederlagen": 0,
+            "Becherdifferenz": 0
+        }
+    },
+    "Group B": {
+        "Team 5": {
+            "Siege": 0,
+            "Niederlagen": 0,
+            "Becherdifferenz": 0
+        },
+        "Team 6": {
+            "Siege": 0,
+            "Niederlagen": 0,
+            "Becherdifferenz": 0
+        },
+        "Team 7": {
+            "Siege": 0,
+            "Niederlagen": 0,
+            "Becherdifferenz": 0
+        },
+        "Team 8": {
+            "Siege": 0,
+            "Niederlagen": 0,
+            "Becherdifferenz": 0
+        }
+    }
+}
