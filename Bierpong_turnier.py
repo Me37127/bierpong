@@ -108,7 +108,7 @@ if submit_result:
             group_table[team1]["Becherdifferenz"] += score_team1
 
         # Ergebnisse speichern
-        save_results(st.session_state.tables, results_file)
+        save_results(st.session_state.tables)
 
         st.success(f"Ergebnis für {team1} vs. {team2} gespeichert!")
     else:
